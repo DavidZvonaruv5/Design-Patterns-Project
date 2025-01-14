@@ -18,6 +18,8 @@ dependencies {
     implementation("com.fasterxml.jackson.core:jackson-databind:2.16.1")
     implementation("com.fasterxml.jackson.core:jackson-annotations:2.16.1")
     implementation("org.xerial:sqlite-jdbc:3.36.0.3")
+    implementation("org.apache.poi:poi-ooxml:5.2.3")
+
 }
 
 tasks.test {

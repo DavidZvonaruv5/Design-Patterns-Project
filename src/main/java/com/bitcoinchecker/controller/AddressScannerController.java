@@ -5,11 +5,22 @@ import com.bitcoinchecker.model.AddressListTableModel;
 import com.bitcoinchecker.model.AddressScannerModel;
 import com.bitcoinchecker.model.AddressTableModel;
 import com.bitcoinchecker.model.BitcoinAddress;
+import com.bitcoinchecker.util.ExcelExporter;
 import com.bitcoinchecker.view.AddressScannerView;
 
 import javax.swing.*;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.util.List;
 
+/**
+ * Controller component implementing MVC pattern.
+ * Handles:
+ * - User interactions (button clicks)
+ * - File operations
+ * - Scan coordination between models
+ * - Error handling and user notifications
+ */
 public class AddressScannerController {
     private final AddressScannerModel model;
     private final AddressScannerView view;
@@ -34,35 +45,52 @@ public class AddressScannerController {
     }
 
     private void handleSave() {
+        List<BitcoinAddress> addresses = tableModel.getAddresses();
+        if (addresses.isEmpty()) {
+            JOptionPane.showMessageDialog(view, "No scan results to export.");
+            return;
+        }
+        ExcelExporter.exportToExcel(addresses, view);
     }
 
     private void handleScan() {
+        List<String> addresses = addressesModel.getAddresses();
+        if (addresses.isEmpty()) {
+            JOptionPane.showMessageDialog(view, "No addresses to scan.");
+            return;
+        }
+
+        model.clearAddresses();
+        addresses.forEach(model::addAddress);
+
+        tableModel.clear();
+        model.scanAddresses();
     }
 
     private void handleClear() {
         model.clearAddresses();
         tableModel.clear();
         addressesModel.clear();
-        DatabaseManager.getInstance().deleteAllAddresses();
-
+        DatabaseManager.getInstance().deleteAllData();
     }
 
     private void handleFileUpload() {
         JFileChooser fileChooser = new JFileChooser();
         if (fileChooser.showOpenDialog(view) == JFileChooser.APPROVE_OPTION) {
             try {
-                model.loadAddressesFromFile(fileChooser.getSelectedFile());
+                model.clearAddresses();
                 int duplicates = 0;
-
-                for (BitcoinAddress address : model.getAddresses()) {
-                    String addr = address.getAddress();
-                    if (!addressesModel.containsAddress(addr)) {
-                        addressesModel.addAddress(addr);
-                    } else {
-                        duplicates++;
+                for (String line : Files.readAllLines(fileChooser.getSelectedFile().toPath())) {
+                    if (!line.trim().isEmpty()) {
+                        String addr = line.trim();
+                        if (!addressesModel.containsAddress(addr)) {
+                            model.addAddress(addr);
+                            addressesModel.addAddress(addr);
+                        } else {
+                            duplicates++;
+                        }
                     }
                 }
-
                 if (duplicates > 0) {
                     JOptionPane.showMessageDialog(view,
                             String.format("Upload complete. Skipped %d duplicate addresses.", duplicates));
@@ -76,11 +104,11 @@ public class AddressScannerController {
     private void handleAddAddress() {
         String address = view.getAddressFieldText();
         if (!address.isEmpty()) {
+            System.out.println("Adding address: " + address);
             model.addAddress(address);
             addressesModel.addAddress(address);
             view.clearAddressField();
         }
     }
 
-    // ... other handler methods
 }

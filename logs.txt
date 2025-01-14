@@ -1,0 +1,43 @@
+01/14/25 12:55:04 scan started
+01/14/25 12:55:05 scan failed. Exception: API request failed with status code: 429, body: {"message":"Too many requests."}
+01/14/25 12:55:05 scan failed. Exception: API request failed with status code: 429, body: {"message":"Too many requests."}
+01/14/25 12:55:06 scan failed. Exception: API request failed with status code: 429, body: {"message":"Too many requests."}
+01/14/25 12:55:06 scan failed. Exception: API request failed with status code: 429, body: {"message":"Too many requests."}
+01/14/25 12:55:06 scan failed. Exception: API request failed with status code: 429, body: {"message":"Too many requests."}
+01/14/25 12:55:07 scan started
+01/14/25 12:55:07 scan failed. Exception: API request failed with status code: 429, body: {"message":"Too many requests."}
+01/14/25 12:55:08 scan failed. Exception: API request failed with status code: 429, body: {"message":"Too many requests."}
+01/14/25 12:55:08 scan failed. Exception: API request failed with status code: 429, body: {"message":"Too many requests."}
+01/14/25 12:55:08 scan failed. Exception: API request failed with status code: 429, body: {"message":"Too many requests."}
+01/14/25 12:55:08 scan failed. Exception: API request failed with status code: 429, body: {"message":"Too many requests."}
+01/14/25 12:55:20 scan started
+01/14/25 12:55:21 scan failed. Exception: API request failed with status code: 429, body: {"message":"Too many requests."}
+01/14/25 12:55:21 scan failed. Exception: API request failed with status code: 429, body: {"message":"Too many requests."}
+01/14/25 12:55:21 scan failed. Exception: API request failed with status code: 429, body: {"message":"Too many requests."}
+01/14/25 12:55:21 scan failed. Exception: API request failed with status code: 429, body: {"message":"Too many requests."}
+01/14/25 12:55:21 scan failed. Exception: API request failed with status code: 429, body: {"message":"Too many requests."}
+01/14/25 12:56:10 scan started
+01/14/25 12:56:11 scan failed. Exception: API request failed with status code: 429, body: {"message":"Too many requests."}
+01/14/25 12:56:11 scan failed. Exception: API request failed with status code: 429, body: {"message":"Too many requests."}
+01/14/25 12:56:11 scan failed. Exception: API request failed with status code: 429, body: {"message":"Too many requests."}
+01/14/25 12:56:11 scan failed. Exception: API request failed with status code: 429, body: {"message":"Too many requests."}
+01/14/25 12:56:11 scan failed. Exception: API request failed with status code: 429, body: {"message":"Too many requests."}
+01/14/25 12:56:12 scan started
+01/14/25 12:56:12 scan failed. Exception: API request failed with status code: 429, body: {"message":"Too many requests."}
+01/14/25 12:56:13 scan failed. Exception: API request failed with status code: 429, body: {"message":"Too many requests."}
+01/14/25 12:56:13 scan failed. Exception: API request failed with status code: 429, body: {"message":"Too many requests."}
+01/14/25 12:56:13 scan failed. Exception: API request failed with status code: 429, body: {"message":"Too many requests."}
+01/14/25 12:56:13 scan failed. Exception: API request failed with status code: 429, body: {"message":"Too many requests."}
+01/14/25 12:58:05 scan started
+01/14/25 12:58:06 scan completed successfully
+01/14/25 13:05:26 scan started
+01/14/25 13:05:27 scan completed successfully
+01/14/25 13:10:08 scan started
+01/14/25 13:10:09 scan failed. Exception: API request failed with status code: 429, body: {"message":"Too many requests."}
+01/14/25 13:10:09 scan failed. Exception: API request failed with status code: 429, body: {"message":"Too many requests."}
+01/14/25 13:41:43 scan started
+01/14/25 13:41:44 scan completed successfully
+01/14/25 13:43:08 scan started
+01/14/25 13:43:09 scan failed. Exception: API request failed with status code: 401, body: {"message":"Invalid credentials"}
+01/14/25 13:43:56 scan started
+01/14/25 13:43:57 scan completed successfully

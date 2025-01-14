@@ -7,6 +7,14 @@ import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * TableModel for address list display and persistence.
+ * Extends AbstractTableModel for JTable integration.
+ * Handles:
+ * - CRUD operations for addresses with database sync
+ * - Editable address cells
+ * - Duplicate checking
+ */
 public class AddressListTableModel extends AbstractTableModel {
     private final List<String> addresses = new ArrayList<>();
     private final String[] columnNames = {"Address"};

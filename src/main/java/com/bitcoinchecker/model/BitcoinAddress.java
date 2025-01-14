@@ -5,6 +5,14 @@ public class BitcoinAddress {
     private int abuseCount;
     private String reportUrl;
 
+
+    /**
+     * Model class representing a Bitcoin address with abuse data.
+     * Stores:
+     * - Address string
+     * - Number of abuse reports
+     * - URL to detailed report
+     */
     public BitcoinAddress(String address) {
         this.address = address;
         this.abuseCount = 0;

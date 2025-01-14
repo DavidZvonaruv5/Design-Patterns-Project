@@ -4,6 +4,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+
+/**
+ * Configuration singleton for managing application properties.
+ * Loads properties from config.properties file.
+ * Provides access to:
+ * - API configuration
+ * - Connection timeouts
+ * - Other app settings
+ * Uses static initialization holder pattern for thread-safe singleton.
+ */
 public class Config {
     private final Properties properties;
 
@@ -35,11 +45,4 @@ public class Config {
         return properties.getProperty("api.key");
     }
 
-    public String getApiBaseUrl() {
-        return properties.getProperty("api.base.url");
-    }
-
-    public int getApiTimeoutSeconds() {
-        return Integer.parseInt(properties.getProperty("api.timeout.seconds", "10"));
-    }
 }

@@ -16,7 +16,19 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 
+
+/**
+ * Core model implementing scan logic and Observer pattern.
+ * Features:
+ * - Concurrent address scanning via ExecutorService
+ * - Observer notifications for scan events
+ * - File loading capabilities
+ * - API client integration
+ * - Error handling and logging
+ */
 public class AddressScannerModel {
     private final List<BitcoinAddress> addresses;
     private final List<ScanObserver> observers;
@@ -53,38 +65,35 @@ public class AddressScannerModel {
 
     public void scanAddresses() {
         notifyStarted();
-
         List<CompletableFuture<Void>> futures = new ArrayList<>();
+        AtomicBoolean hasError = new AtomicBoolean(false);
 
         for (BitcoinAddress address : addresses) {
             CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
                 try {
                     AddressResponse response = apiClient.checkAddress(address.getAddress());
                     address.setAbuseCount(response.getTotalReports());
-
-                    // Build report URL
-                    String reportUrl = String.format("https://www.chainabuse.com/reports/%s", address.getAddress());
+                    String reportUrl = String.format("https://www.chainabuse.com/address/%s", address.getAddress());
                     address.setReportUrl(reportUrl);
-
                     notifyAddressScanned(address);
                 } catch (Exception e) {
-                    logger.log("Error scanning address " + address.getAddress() + ": " + e.getMessage());
+                    hasError.set(true);
+                    notifyFailed(e);
                 }
             }, executorService);
-
             futures.add(future);
         }
 
         CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
-                .thenRun(this::notifyCompleted)
-                .exceptionally(throwable -> {
-                    notifyFailed(new Exception("Scan failed", throwable));
-                    return null;
+                .thenRun(() -> {
+                    if (!hasError.get()) {
+                        notifyCompleted();
+                    }
                 });
     }
 
     private void notifyStarted() {
-        logger.log("scan started");
+        logger.log("scan started",false);
         for (ScanObserver observer : observers) {
             observer.onScanStarted();
         }
@@ -97,14 +106,14 @@ public class AddressScannerModel {
     }
 
     private void notifyCompleted() {
-        logger.log("scan completed successfully");
+        logger.log("scan completed successfully",true);
         for (ScanObserver observer : observers) {
             observer.onScanCompleted(addresses);
         }
     }
 
     private void notifyFailed(Exception e) {
-        logger.log("scan failed. Exception: " + e.getMessage());
+        logger.log("scan failed. Exception: " + e.getMessage(),true);
         for (ScanObserver observer : observers) {
             observer.onScanFailed(e);
         }

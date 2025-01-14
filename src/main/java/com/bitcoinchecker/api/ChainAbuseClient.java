@@ -13,6 +13,14 @@ import java.util.List;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
+/**
+ * HTTP client for ChainAbuse API integration.
+ * Features:
+ * - Configurable timeouts
+ * - JSON parsing
+ * - Error handling
+ * - Response mapping to domain objects
+ */
 public class ChainAbuseClient {
     private static final String API_BASE_URL = "https://api.chainabuse.com/v0";
     final HttpClient httpClient;
@@ -31,7 +39,7 @@ public class ChainAbuseClient {
         try {
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(API_BASE_URL + "/reports?address=" + address))
-                    .header("authorization", "Basic Y2FfYTFGalpsRTRjSEEyTVdkb2VUbFpVMUJrUVhnelUyaHBMbXM0VkVrMUsxa3pRVlF2YjFGNFJXNXFNbXRPWjJjOVBROmNhX2ExRmpabEU0Y0hBMk1XZG9lVGxaVTFCa1FYZ3pVMmhwTG1zNFZFazFLMWt6UVZRdmIxRjRSVzVxTW10T1oyYzlQUQ==")
+                    .header("authorization", apiKey)
                     .header("Accept", "application/json")
                     .GET()
                     .build();
@@ -46,8 +54,7 @@ public class ChainAbuseClient {
                 return addressResponse;
             }else if (response.statusCode() == 404) {
                 // Address not found in database, return empty response
-                AddressResponse emptyResponse = new AddressResponse();
-                return emptyResponse;
+                return new AddressResponse();
             } else {
                 throw new IOException("API request failed with status code: " +
                         response.statusCode() + ", body: " + response.body());
